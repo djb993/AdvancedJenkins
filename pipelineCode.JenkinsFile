@@ -51,6 +51,12 @@ pipeline {
             }
         }
 
+        stage('Complete') {
+            steps {
+                echo '==========Completed==========' 
+            }
+        }
+    
         stage('Deploy to Production') {
             when {
                 expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
