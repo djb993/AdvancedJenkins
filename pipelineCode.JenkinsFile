@@ -6,7 +6,15 @@ pipeline {
     }
 
     stages {
-        
+
+        stage('email') {
+            steps {
+                echo "SMTP Server: ${SMTP_SERVER}"
+                echo "SMTP Port: ${SMTP_PORT}"
+                echo "SMTP User: ${SMTP_USER}"
+            }
+        }
+
         stage('Build') {
             steps {
                 echo '========== Building In Gradle =========='
