@@ -49,9 +49,10 @@ pipeline {
                 echo '========== Security Scan Using OWASP Dependency-Check =========='
                 echo 'Identifying vulnerabilities in third-party dependencies'
                 echo 'Addressing detected issues'
+                writeFile(file: 'Security_Scan.log', text: "Custom log message for Security_Scan\n")
             }
             post {
-                success {
+                always {
                     emailext to: "daniel.blair217@gmail.com",
                     subject: "Security Scan Using OWASP Dependency-Check Test Status Email",
                     body: "Unit & Integration tests were successful",
@@ -74,9 +75,10 @@ pipeline {
                 echo "Selenium: testing web application"
                 echo "API testing employing Newman (Postman)"
                 echo "Verifying application works as expected"
+                writeFile(file: 'Integration_Test_Staging.log', text: "Custom log message for Integration_Test_Staging\n")
             }
             post {
-                success {
+                always {
                     emailext to: "daniel.blair217@gmail.com",
                     subject: "Integration Tests on Staging Using Selenium and Newman (Postman) Status Email",
                     body: "Integration Tests on Staging were successful",
