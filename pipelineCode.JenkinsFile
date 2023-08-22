@@ -25,14 +25,14 @@ pipeline {
             }
             post {
                 success {
-                    emailext attachLog: true, attachmentsPattern: "**/Unit_Integration_Test.log",
-                    mail to: "daniel.blair217@gmail.com",
+                    emailext to: "daniel.blair217@gmail.com",
                     subject: "Unit & Integration Test Using JUnit & Postman Status Email",
-                    body: "Unit & Integration tests were successful"
+                    body: "Unit & Integration tests were successful",
+                    attachLog: true,
+                    attachmentsPattern: "**/Unit_Integration_Test.log"
                 }
             }
         }
-
         stage('Code_Analysis') {
             steps {
                 echo '========== Code Analysis Using SonarQube =========='
