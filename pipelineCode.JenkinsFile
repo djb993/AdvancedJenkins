@@ -7,14 +7,6 @@ pipeline {
 
     stages {
 
-        stage('email') {
-            steps {
-                echo "SMTP Server: ${SMTP_SERVER}"
-                echo "SMTP Port: ${SMTP_PORT}"
-                echo "SMTP User: ${SMTP_USER}"
-            }
-        }
-
         stage('Build') {
             steps {
                 echo '========== Building In Gradle =========='
@@ -33,10 +25,11 @@ pipeline {
             }
             post {
                 success {
-                    emailext to: "daniel.blair217@gmail.com",
+                    emailext attachLog: true, attachmentsPattern: "**/Unit_Integration_Test.log"
+                    to: "daniel.blair217@gmail.com",
                     subject: "Unit & Integration Test Using JUnit & Postman Status Email",
                     body: "Unit & Integration tests were successful",
-                    attachmentsPattern: "**/Unit_Integration_Test.log"
+                    
                 }
             }
         }
