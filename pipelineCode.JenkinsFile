@@ -22,17 +22,19 @@ pipeline {
                 echo '========== Unit & Integration Testing Using JUnit & Postman =========='
                 echo "Running Unit Test with JUnit to verify code components"
                 echo "Running Integration Test using Postman to check component interactions"
-                sh 'echo "This is a log for the Unit_Integration_Test stage" > Unit_Integration_Test.log'
-            }
-            post {
-                success {
-                    emailext to: "daniel.blair217@gmail.com",
-                    subject: "Unit & Integration Test Using JUnit & Postman Status Email",
-                    body: "Unit & Integration tests were successful",
-                    attachmentsPattern: "**/Unit_Integration_Test.log"
-                }
+                echo "This is a log for the Unit_Integration_Test stage" > Unit_Integration_Test.log
             }
         }
+        
+        post {
+            success {
+                emailext to: "daniel.blair217@gmail.com",
+                subject: "Unit & Integration Test Using JUnit & Postman Status Email",
+                body: "Unit & Integration tests were successful",
+                attachmentsPattern: "**/Unit_Integration_Test.log"
+            }
+        }
+
         stage('Code_Analysis') {
             steps {
                 echo '========== Code Analysis Using SonarQube =========='
