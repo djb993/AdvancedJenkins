@@ -24,16 +24,16 @@ pipeline {
                 echo "Running Integration Test using Postman to check component interactions"
                 echo "This is a log for the Unit_Integration_Test stage" > Unit_Integration_Test.log
             }
-        }
-        
-        post {
-            success {
-                emailext to: "daniel.blair217@gmail.com",
-                subject: "Unit & Integration Test Using JUnit & Postman Status Email",
-                body: "Unit & Integration tests were successful",
-                attachmentsPattern: "**/Unit_Integration_Test.log"
+            post {
+                success {
+                    emailext to: "daniel.blair217@gmail.com",
+                    subject: "Unit & Integration Test Using JUnit & Postman Status Email",
+                    body: "Unit & Integration tests were successful",
+                    attachmentsPattern: "**/Unit_Integration_Test.log"
+                }
             }
         }
+
 
         stage('Code_Analysis') {
             steps {
