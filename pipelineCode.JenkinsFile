@@ -1,0 +1,64 @@
+pipeline {
+    agent any
+
+    environment {
+        DIRECTORY_PATH = 'C:/Users/danie/OneDrive/Desktop/SIT753/Code'
+        TESTING_ENVIRONMENT = 'default_test_environment'
+        PRODUCTION_ENVIRONMENT = "Dan's_Continuous_Delivery_Pipline"
+    }
+
+    stages {
+        
+        stage('Build') {
+            steps {
+                echo '==========Building=========='
+                echo "fetch the source code from directory path: ${DIRECTORY_PATH}"
+                echo "Compiling and generating any necessary artifacts"
+            }
+            post {
+                success {
+                    mail to: "daniel.blair217@gmail.com",
+                    subject: "Build Status Email",
+                    body: "Build was successful"
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo '==========Testing=========='
+                echo 'Running Unit Test'
+                echo 'Running Integration Test'
+            }
+        }
+
+        stage('Code Quality Check') {
+            steps {
+                echo '==========Checking Quality=========='
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo "==========Deploying To ${TESTING_ENVIRONMENT}=========="
+            }
+        }
+
+        stage('Approval') {
+            steps {
+                echo '==========Waiting for approval=========='
+                sleep time: 10, unit: 'SECONDS'
+            }
+        }
+
+        stage('Deploy to Production') {
+            when {
+                expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
+            }
+            steps {
+                echo "Deploying Code To ${PRODUCTION_ENVIRONMENT}"
+            }
+        }
+        
+    }
+}
