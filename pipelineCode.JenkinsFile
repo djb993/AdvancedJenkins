@@ -25,7 +25,7 @@ pipeline {
             }
             post {
                 success {
-                    mail to: "daniel.blair217@gmail.com",
+                    emailext to: "daniel.blair217@gmail.com",
                     subject: "Unit & Integration Test Using JUnit & Postman Status Email",
                     body: "Unit & Integration tests were successful",
                     attachmentsPattern: "**/Unit_Integration_Test.log"
@@ -50,7 +50,7 @@ pipeline {
             }
             post {
                 success {
-                    mail to: "daniel.blair217@gmail.com",
+                    emailext to: "daniel.blair217@gmail.com",
                     subject: "Security Scan Using OWASP Dependency-Check Test Status Email",
                     body: "Unit & Integration tests were successful",
                     attachmentsPattern: "**/Security_Scan.log"
@@ -75,7 +75,7 @@ pipeline {
             }
             post {
                 success {
-                    mail to: "daniel.blair217@gmail.com",
+                    emailext to: "daniel.blair217@gmail.com",
                     subject: "Integration Tests on Staging Using Selenium and Newman (Postman) Status Email",
                     body: "Integration Tests on Staging were successful",
                     attachmentsPattern: "**/Integration_Test_Staging.log"
