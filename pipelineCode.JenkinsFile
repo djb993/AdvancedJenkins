@@ -22,10 +22,7 @@ pipeline {
                 echo '========== Unit & Integration Testing Using JUnit & Postman =========='
                 echo "Running Unit Test with JUnit to verify code components"
                 echo "Running Integration Test using Postman to check component interactions"
-                script {
-                    def logFile = new File("Unit_Integration_Test.log")
-                    logFile << "Custom log message \n"
-                }
+                writeFile(file: 'Unit_Integration_Test.log', text: "Custom log message for Unit_Integration_Test\n")
             }
             post {
                 always {
