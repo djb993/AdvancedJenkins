@@ -3,66 +3,95 @@ pipeline {
 
     environment {
         DIRECTORY_PATH = 'C:/Users/danie/OneDrive/Desktop/SIT753/Code'
-        TESTING_ENVIRONMENT = 'default_test_environment'
-        PRODUCTION_ENVIRONMENT = "Dan's_Continuous_Delivery_Pipline"
     }
 
     stages {
         
         stage('Build') {
             steps {
-                echo '==========Building=========='
-                echo "fetch the source code from directory path: ${DIRECTORY_PATH}"
-                echo "Compiling and generating any necessary artifacts"
+                echo '========== Building In Gradle =========='
+                echo "Fetching Source Code from Directory Path: ${DIRECTORY_PATH}"
+                echo "Cleaning the Project From Previous Build"
+                echo "Compiling and Generating Necessary Artifacts"
+                echo "Packaging Application in Deployable Format"
+            }
+        }
+
+        stage('Unit_Integration_Test') {
+            steps {
+                echo '========== Unit & Integration Testing Using JUnit & Postman =========='
+                echo "Running Unit Test with JUnit to verify code components"
+                echo "Running Integration Test using Postman to check component interactions"
             }
             post {
                 success {
                     mail to: "daniel.blair217@gmail.com",
-                    subject: "Build Status Email",
-                    body: "Build was successful"
+                    subject: "Unit & Integration Test Using JUnit & Postman Status Email",
+                    body: "Unit & Integration tests were successful",
+                    attachmentsPattern: "**/Unit_Integration_Test.log"
                 }
             }
         }
 
-        stage('Test') {
+        stage('Code_Analysis') {
             steps {
-                echo '==========Testing=========='
-                echo 'Running Unit Test'
-                echo 'Running Integration Test'
+                echo '========== Code Analysis Using SonarQube =========='
+                echo "Assessing code quality: code smells, duplications, coverage"
+                echo "Identifying security vulnerabilities"
+                echo "Generating code improvement report"
             }
         }
 
-        stage('Code Quality Check') {
+        stage('Security_Scan') {
             steps {
-                echo '==========Checking Quality=========='
+                echo '========== Security Scan Using OWASP Dependency-Check =========='
+                echo 'Identifying vulnerabilities in third-party dependencies'
+                echo 'Addressing detected issues'
+            }
+            post {
+                success {
+                    mail to: "daniel.blair217@gmail.com",
+                    subject: "Security Scan Using OWASP Dependency-Check Test Status Email",
+                    body: "Unit & Integration tests were successful",
+                    attachmentsPattern: "**/Security_Scan.log"
+                }
+            }
+        }
+        
+        stage('Deploy_To_Staging') {
+            steps {
+                echo "========== Deploying To Staging Using AWS Elastic Beanstalk =========="
+                echo "Application deployed successfully"
+                echo "Controlled Environment Employed for testing"
             }
         }
 
-        stage('Deploy') {
+        stage('Integration_Test_Staging') {
             steps {
-                echo "==========Deploying To ${TESTING_ENVIRONMENT}=========="
+                echo "========== Integration Tests on Staging Using Selenium and Newman (Postman) =========="
+                echo "Selenium: testing web application"
+                echo "API testing employing Newman (Postman)"
+                echo "Verifying application works as expected"
             }
-        }
-
-        stage('Approval') {
-            steps {
-                echo '==========Waiting for approval=========='
-                sleep time: 10, unit: 'SECONDS'
-            }
-        }
-
-        stage('Complete') {
-            steps {
-                echo '==========Completed==========' 
+            post {
+                success {
+                    mail to: "daniel.blair217@gmail.com",
+                    subject: "Integration Tests on Staging Using Selenium and Newman (Postman) Status Email",
+                    body: "Integration Tests on Staging were successful",
+                    attachmentsPattern: "**/Integration_Test_Staging.log"
+                }
             }
         }
     
-        stage('Deploy to Production') {
+        stage('Deploy_To_Production') {
             when {
                 expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
             }
             steps {
-                echo "Deploying Code To ${PRODUCTION_ENVIRONMENT}"
+                echo "========== Deploying To Production Using AWS EC2 Instance =========="
+                echo "Launching EC2 instance with required configurations and dependencies."
+                echo "Uploading application artifact, establishing SSH connection, executing the deployment script."
+                echo "Implement health checks, setup monitoring"
             }
         }
         
