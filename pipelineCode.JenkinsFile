@@ -22,10 +22,6 @@ pipeline {
                 echo '========== Unit & Integration Testing Using JUnit & Postman =========='
                 echo "Running Unit Test with JUnit to verify code components"
                 echo "Running Integration Test using Postman to check component interactions"
-                script {
-                    def Unit_Integration_Test = currentBuild.rawBuild.loggers.get('log')
-                    Unit_Integration_Test.println("Custom log message for Unit_Integration_Test")
-                }
             }
             post {
                 always {
