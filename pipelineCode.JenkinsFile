@@ -22,13 +22,14 @@ pipeline {
                 echo '========== Unit & Integration Testing Using JUnit & Postman =========='
                 echo "Running Unit Test with JUnit to verify code components"
                 echo "Running Integration Test using Postman to check component interactions"
+                sh 'echo "Custom log message for Unit_Integration_Test" | Unit_Integration_Test.log'
             }
             post {
-                success {
+                always {
                     emailext to: "daniel.blair217@gmail.com",
                     subject: "Unit & Integration Test Using JUnit & Postman Status Email",
                     body: "Unit & Integration tests were successful",
-                    attachLog: true
+                    attachmentsPattern: "**/Unit_Integration_Test.log"
                 }
             }
         }
