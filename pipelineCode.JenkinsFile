@@ -55,7 +55,7 @@ pipeline {
                 always {
                     emailext to: "daniel.blair217@gmail.com",
                     subject: "Security Scan Using OWASP Dependency-Check Test Status Email",
-                    body: "Unit & Integration tests were successful",
+                    body: "Security Scan was successful",
                     attachmentsPattern: "**/Security_Scan.log"
                 }
             }
